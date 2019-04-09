@@ -18,7 +18,7 @@ public class OilPricingRevenueYieldTest {
 	private OilService oilService;
 	
 	@Test
-	public void test() {
+	public void calcProcessRevenueYieldTest() {
 		
 		Double price = 12.50;
 		

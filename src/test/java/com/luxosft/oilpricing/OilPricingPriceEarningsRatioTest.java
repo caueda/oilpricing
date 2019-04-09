@@ -18,7 +18,7 @@ public class OilPricingPriceEarningsRatioTest {
 	private OilService oilService;
 
 	@Test
-	public void test() {
+	public void calcPriceEarningsRationTest() {
 		Double price = 12.50;
 		
 		assertEquals(oilService.processPriceEarningsRation(oilService.loadById("AAC"), price), Double.valueOf(156.25));
