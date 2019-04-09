@@ -1,37 +1,20 @@
 package com.luxosft.oilpricing.service;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.luxosft.oilpricing.domain.Oil;
-import com.luxosft.oilpricing.domain.Type;
+import com.luxosft.oilpricing.model.Oil;
+import com.luxosft.oilpricing.repository.OilRepository;
 import com.luxosft.oilpricing.util.NumberUtil;
 
 @Service
 public class OilServiceImpl implements OilService {
-	private static final Map<String, Oil> mapDB = new HashMap<String, Oil>();
 	
-	static {
-		insertOilRegister("AAC", Type.STANDARD, 1.0, null, 42.0);
-		insertOilRegister("REW", Type.STANDARD, 7.0, null, 47.0);
-		insertOilRegister("BWO", Type.STANDARD, 17.0, null, 61.0);
-		insertOilRegister("TIM", Type.PREMIUM, 5.0, 7.0, 111.0);
-		insertOilRegister("QFC", Type.STANDARD, 22.0, null, 123.0);
-	}
+	private OilRepository oilRepository;
 	
-	private static void insertOilRegister(String oilID, Type type, Double fixedRevenue, Double variableRevenue, Double barrelValue){
-		mapDB.put(oilID, new Oil(oilID, type, fixedRevenue, variableRevenue, barrelValue));
-	}
-	
-	public Collection<Oil> listAll(){
-		return mapDB.values();
-	}
-	
-	public Oil loadById(String oilID){
-		return mapDB.get(oilID);
+	public OilServiceImpl(OilRepository oilRepository){
+		this.oilRepository = oilRepository;
 	}
 	
 	@Override
@@ -63,5 +46,15 @@ public class OilServiceImpl implements OilService {
 		geometricMean = Math.pow(geometricMean, 1.0 / oils.size());
 		
 		return NumberUtil.round(geometricMean);
+	}
+
+	@Override
+	public Collection<Oil> listAll() {
+		return oilRepository.listAll();
+	}
+	
+	@Override
+	public Oil loadById(String oilID){
+		return oilRepository.findOne(oilID);
 	}
 }

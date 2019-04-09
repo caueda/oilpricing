@@ -2,7 +2,7 @@ package com.luxosft.oilpricing.service;
 
 import java.util.Collection;
 
-import com.luxosft.oilpricing.domain.Oil;
+import com.luxosft.oilpricing.model.Oil;
 
 public interface OilService {
 	/**

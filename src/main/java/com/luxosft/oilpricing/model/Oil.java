@@ -1,4 +1,4 @@
-package com.luxosft.oilpricing.domain;
+package com.luxosft.oilpricing.model;
 
 import java.io.Serializable;
 
