@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +23,7 @@ import com.luxosft.oilpricing.service.TransactionService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OilpricingGeometricMeanTests {
+public class OilPricingTransactionTests {
 
 	@Autowired
 	private TransactionService transactionService;
@@ -33,7 +32,7 @@ public class OilpricingGeometricMeanTests {
 	private TransactionRepository transactionRepository;
 	
 	/**
-	 * Test if the method is filtering transactions for the last 30 minutes
+	 * This method will test the filtering of transactions inserted in the last 30 minutes
 	 */
 	@Test
 	public void last30MinutesTransactions() {
@@ -52,7 +51,7 @@ public class OilpricingGeometricMeanTests {
 	}
 	
 	/**
-	 * This méthod will test the calculation based on the transactions in the list
+	 * This method will test the calculation of the Weighted Oil Price
 	 */
 	@Test
 	public void calcWeightedOilPriceTest() {
@@ -64,6 +63,22 @@ public class OilpricingGeometricMeanTests {
 		).collect(Collectors.toList()));
 		
 		assertEquals(transactionService.getWeightedOilPriceLastNMinutes(30), new Double(17.4));
+		
+	}
+	
+	/**
+	 * This method will test the calculation based on the transactions in the list
+	 */
+	@Test
+	public void calcGeometricMeanTest() {
+		
+		Mockito.when(transactionService.listAll()).thenReturn(Stream.of(
+				new Transaction(1L, new Oil("AAC", Type.STANDARD, 1.0, null, 42.0),10L, 12.5, TransactionType.BUY, LocalDateTime.now()),
+				new Transaction(1L, new Oil("AAC", Type.STANDARD, 1.0, null, 42.0),22L, 22.53, TransactionType.SELL, LocalDateTime.now()),
+				new Transaction(1L, new Oil("REW", Type.STANDARD, 7.0, null, 47.0),13L, 12.5, TransactionType.SELL, LocalDateTime.now())
+		).collect(Collectors.toList()));
+		
+		assertEquals(transactionService.calculateGeometricMean(), new Double(15.21));
 		
 	}
 }

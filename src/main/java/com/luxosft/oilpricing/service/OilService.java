@@ -22,14 +22,6 @@ public interface OilService {
 	Double processPriceEarningsRation(Oil oil, Double price);
 
 	/**
-	 * This method will calculate the Geometric Mean
-	 * @param oils
-	 * @param price
-	 * @return
-	 */
-	Double calculateGeometricMean(Collection<Oil> oils, Double price);
-	
-	/**
 	 * This method will return a Collection of Oil
 	 * @return
 	 */

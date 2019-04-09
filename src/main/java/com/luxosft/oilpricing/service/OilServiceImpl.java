@@ -38,17 +38,6 @@ public class OilServiceImpl implements OilService {
 	}
 	
 	@Override
-	public Double calculateGeometricMean(Collection<Oil> oils, Double price){
-		Double geometricMean = 1.0;
-		for(Oil oil : oils){
-			geometricMean *= processPriceEarningsRation(oil, price);
-		}
-		geometricMean = Math.pow(geometricMean, 1.0 / oils.size());
-		
-		return Util.round(geometricMean);
-	}
-
-	@Override
 	public Collection<Oil> listAll() {
 		return oilRepository.listAll();
 	}

@@ -12,4 +12,5 @@ public interface TransactionService {
 	void save(Transaction transaction);
 	Transaction findOne(Long id);
 	List<Transaction> listAllInLastNMinutes(Integer minutesPassed);
+	Double calculateGeometricMean();
 }

@@ -52,14 +52,24 @@ public class TransactionServiceImpl implements TransactionService {
 		List<Transaction> transactions =
 		transactionRepository.listAll().stream().filter(trans -> {
 			if(trans.getTransactionDate().isAfter(lowerBound)) {
-				System.out.println(trans.getTransactionDate() + " is after " + lowerBound);
 				return true;	
 			} else {
-				System.out.println(trans.getTransactionDate() + " is not after " + lowerBound);
 				return false;
 			}
 		}).collect(Collectors.toList());
 		
 		return transactions;
+	}
+	
+	@Override
+	public Double calculateGeometricMean(){
+		List<Transaction> transactions = transactionRepository.listAll();
+		Double geometricMean = 1.0;
+		for(Transaction t : transactions){
+			geometricMean *= t.getPrice();
+		}
+		geometricMean = Math.pow(geometricMean, 1.0 / transactions.size());
+		
+		return Util.round(geometricMean);
 	}
 }
