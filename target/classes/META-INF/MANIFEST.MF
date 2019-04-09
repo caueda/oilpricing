@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: oilpricing
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Carlos Roberto Ueda
+Implementation-Vendor-Id: com.luxosft
+Build-Jdk: 1.8.0_91
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/oilpricing
+Created-By: Maven Integration for Eclipse
+
