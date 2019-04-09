@@ -1,8 +1,9 @@
 package com.luxosft.oilpricing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,13 +29,12 @@ public class OilpricingRecordTransactionTests {
 	@Test
 	public void recordTransaction() {
 		double price = 12.50;
-		Date date = new Date();
 		Oil oil = oilService.loadById("AAC");
 		Transaction transaction = new Transaction();
 		transaction.setOil(oil);
 		transaction.setPrice(price);
 		transaction.setQuantity(17L);
-		transaction.setTransactionDate(date);
+		transaction.setTransactionDate(LocalDateTime.now());
 		transaction.setTransactionType(TransactionType.BUY);
 		
 		transactionService.save(transaction);
@@ -47,13 +47,9 @@ public class OilpricingRecordTransactionTests {
 		
 		Transaction load = transactionService.findOne(1L);
 		/*
-		 * Test of the values recorded
+		 * The same instance of Transaction created here, is inserted in a MAP.
 		 */
-		assertEquals(load.getPrice(), price, 0.0);
-		assertEquals(load.getQuantity(), Long.valueOf(17));
-		assertEquals(load.getTransactionDate(), date);
-		assertEquals(load.getTransactionType(), TransactionType.BUY);
+		assertSame(load, transaction);
 	}
-
 }
 

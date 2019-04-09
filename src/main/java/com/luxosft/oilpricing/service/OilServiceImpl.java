@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.luxosft.oilpricing.model.Oil;
 import com.luxosft.oilpricing.repository.OilRepository;
-import com.luxosft.oilpricing.util.NumberUtil;
+import com.luxosft.oilpricing.util.Util;
 
 @Service
 public class OilServiceImpl implements OilService {
@@ -29,12 +29,12 @@ public class OilServiceImpl implements OilService {
 				break;
 		}
 		
-		return NumberUtil.round(result);
+		return Util.round(result);
 	}
 	
 	@Override
 	public Double processPriceEarningsRation(final Oil oil, Double price){
-		return NumberUtil.round(price/processRevenueYield(oil, price));
+		return Util.round(price/processRevenueYield(oil, price));
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class OilServiceImpl implements OilService {
 		}
 		geometricMean = Math.pow(geometricMean, 1.0 / oils.size());
 		
-		return NumberUtil.round(geometricMean);
+		return Util.round(geometricMean);
 	}
 
 	@Override

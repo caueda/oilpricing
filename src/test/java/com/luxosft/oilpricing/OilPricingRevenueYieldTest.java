@@ -16,9 +16,10 @@ public class OilPricingRevenueYieldTest {
 	
 	@Autowired
 	private OilService oilService;
-
+	
 	@Test
 	public void test() {
+		
 		Double price = 12.50;
 		
 		assertEquals(oilService.processRevenueYield(oilService.loadById("AAC"), price), Double.valueOf(0.08));

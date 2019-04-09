@@ -1,8 +1,5 @@
 package com.luxosft.oilpricing.repository;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,23 +26,12 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 	}
 
 	@Override
-	public Collection<Transaction> listAll() {
-		return MAP.values();
+	public List<Transaction> listAll() {
+		return MAP.values().stream().collect(Collectors.toList());
 	}
 
 	@Override
 	public Transaction findOne(Long id) {
 		return MAP.get(id);
-	}
-
-	@Override
-	public List<Transaction> listAllInLastNMinutes(Integer minutesPassed) {
-		List<Transaction> transactions =
-		MAP.values().stream().filter(transactionDate -> {
-            ChronoUnit.MINUTES.between(LocalDate.now(), LocalDate.now().minus(minutesPassed, ChronoUnit.MINUTES));
-        return false;
-		}).collect(Collectors.toList());
-		
-		return transactions;
 	}
 }

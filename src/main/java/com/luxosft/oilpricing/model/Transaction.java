@@ -1,6 +1,7 @@
 package com.luxosft.oilpricing.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Data;
@@ -21,13 +22,24 @@ public class Transaction implements Serializable, Comparable<Transaction> {
 	private Long quantity;
 	private Double price;
 	private TransactionType transactionType;
-	private Date transactionDate;
+	private LocalDateTime transactionDate;
 	
 	public Transaction(){
 		super();
 	}
 	
-	public Transaction(Oil oil, Date transactionDate) {
+	public Transaction(Long id, Oil oil, Long quantity, Double price, TransactionType transactionType,
+			LocalDateTime transactionDate) {
+		super();
+		this.id = id;
+		this.oil = oil;
+		this.quantity = quantity;
+		this.price = price;
+		this.transactionType = transactionType;
+		this.transactionDate = transactionDate;
+	}	
+	
+	public Transaction(Oil oil, LocalDateTime transactionDate) {
 		super();
 		this.oil = oil;
 		this.transactionDate = transactionDate;

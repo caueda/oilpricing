@@ -1,8 +1,9 @@
 package com.luxosft.oilpricing.repository;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import com.luxosft.oilpricing.model.Type;
 
 @Component
 public class OilRepositoryImpl implements OilRepository {
+	
 	private static final Map<String, Oil> MAP = new HashMap<String, Oil>();
 	
 	static {
@@ -26,8 +28,8 @@ public class OilRepositoryImpl implements OilRepository {
 	}
 	
 	@Override
-	public Collection<Oil> listAll(){
-		return MAP.values();
+	public List<Oil> listAll(){
+		return MAP.values().stream().collect(Collectors.toList());
 	}
 	
 	@Override

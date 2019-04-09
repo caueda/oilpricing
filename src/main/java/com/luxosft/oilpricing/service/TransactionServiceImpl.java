@@ -1,12 +1,15 @@
 package com.luxosft.oilpricing.service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.luxosft.oilpricing.model.Transaction;
 import com.luxosft.oilpricing.repository.TransactionRepository;
+import com.luxosft.oilpricing.util.Util;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -18,12 +21,13 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 	
 	@Override
-	public Double getWeightedOilPriceLastNMinutes(Collection<Transaction> transactions, Integer minutesPassed){
+	public Double getWeightedOilPriceLastNMinutes(Integer minutesPassed){
 		
-		List<Transaction> toProcess = transactionRepository.listAllInLastNMinutes(30);		
+		List<Transaction> toProcess = listAllInLastNMinutes(30);		
 		Double zQuantity = toProcess.stream().mapToDouble(Transaction::getQuantity).sum();
 		Double zPriceQuantity = toProcess.stream().mapToDouble(Transaction::getQuantityPrice).sum();
-		return zPriceQuantity / zQuantity;
+		
+		return Util.round(zPriceQuantity / zQuantity);
 		
 	}
 
@@ -40,5 +44,22 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public Transaction findOne(Long id) {
 		return transactionRepository.findOne(id);
+	}
+
+	@Override
+	public List<Transaction> listAllInLastNMinutes(Integer minutesPassed) {
+		LocalDateTime lowerBound = LocalDateTime.now().minusMinutes(minutesPassed);
+		List<Transaction> transactions =
+		transactionRepository.listAll().stream().filter(trans -> {
+			if(trans.getTransactionDate().isAfter(lowerBound)) {
+				System.out.println(trans.getTransactionDate() + " is after " + lowerBound);
+				return true;	
+			} else {
+				System.out.println(trans.getTransactionDate() + " is not after " + lowerBound);
+				return false;
+			}
+		}).collect(Collectors.toList());
+		
+		return transactions;
 	}
 }
