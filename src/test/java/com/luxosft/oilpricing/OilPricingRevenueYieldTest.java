@@ -19,7 +19,9 @@ public class OilPricingRevenueYieldTest {
 	
 	@Test
 	public void calcProcessRevenueYieldTest() {
-		
+		/* 
+		 * Test case in Spreadsheet - Table-1 (column Revenue Yield)
+		 */
 		Double price = 12.50;
 		
 		assertEquals(oilService.processRevenueYield(oilService.findOne("AAC"), price), Double.valueOf(0.08));
@@ -40,6 +42,10 @@ public class OilPricingRevenueYieldTest {
 	
 	@Test
 	public void calcPriceEarningsRationTest() {
+		/* 
+		 * Test case in Spreadsheet - Table-1 (column Revenue Price-Earnings Ratio)
+		 */
+		
 		Double price = 12.50;
 		
 		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("AAC"), price), Double.valueOf(156.25));
@@ -60,6 +66,7 @@ public class OilPricingRevenueYieldTest {
 	
 	@Test
 	public void listAllTest(){
+		//There is 5 Oil registers initialized in memory
 		assertEquals(oilService.listAll().size(), 5);
 	}
 

@@ -65,7 +65,9 @@ public class OilPricingTransactionTests {
 	 */
 	@Test
 	public void calcWeightedOilPriceTest() {
-		
+		/* 
+		 * Test case in Spreadsheet - Table-2 (WeightedOilPrice = 17.4)
+		 */
 		Mockito.when(transactionService.listAll()).thenReturn(Stream.of(
 				new Transaction(1L, new Oil("AAC", Type.STANDARD, 1.0, null, 42.0),10L, 12.5, TransactionType.BUY, LocalDateTime.now()),
 				new Transaction(1L, new Oil("AAC", Type.STANDARD, 1.0, null, 42.0),22L, 22.53, TransactionType.SELL, LocalDateTime.now()),
