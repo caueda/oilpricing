@@ -32,6 +32,16 @@ public class OilPricingTransactionTests {
 	private TransactionRepository transactionRepository;
 	
 	/**
+	 * This method will test the persistence of a transaction
+	 */
+	public void saveAndFindTransactionTest(){
+		Transaction transaction = new Transaction(1L, new Oil("AAC", Type.STANDARD, 1.0, null, 42.0),10L, 12.5, TransactionType.BUY, LocalDateTime.now().minusMinutes(40));
+		transactionService.save(transaction);
+		assertEquals(transactionService.listAll().size(), 1);
+		org.junit.Assert.assertSame(transactionService.findOne(1L), transaction);
+	}
+	
+	/**
 	 * This method will test the filtering of transactions inserted in the last 30 minutes
 	 */
 	@Test

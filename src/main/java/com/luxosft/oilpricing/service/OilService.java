@@ -32,5 +32,5 @@ public interface OilService {
 	 * @param oilID
 	 * @return
 	 */
-	Oil loadById(String oilID);
+	Oil findOne(String oilID);
 }

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.luxosft.oilpricing.model.Transaction;
@@ -16,6 +17,7 @@ public class TransactionServiceImpl implements TransactionService {
 	
 	private TransactionRepository transactionRepository;
 	
+	@Autowired
 	public TransactionServiceImpl(TransactionRepository transactionRepository){
 		this.transactionRepository = transactionRepository;
 	}

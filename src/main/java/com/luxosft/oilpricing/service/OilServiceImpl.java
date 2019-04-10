@@ -2,6 +2,7 @@ package com.luxosft.oilpricing.service;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.luxosft.oilpricing.model.Oil;
@@ -13,6 +14,7 @@ public class OilServiceImpl implements OilService {
 	
 	private OilRepository oilRepository;
 	
+	@Autowired
 	public OilServiceImpl(OilRepository oilRepository){
 		this.oilRepository = oilRepository;
 	}
@@ -43,7 +45,7 @@ public class OilServiceImpl implements OilService {
 	}
 	
 	@Override
-	public Oil loadById(String oilID){
+	public Oil findOne(String oilID){
 		return oilRepository.findOne(oilID);
 	}
 }

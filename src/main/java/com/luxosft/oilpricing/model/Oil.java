@@ -6,6 +6,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Entity foi Oil
+ * @author Carlos Roberto Ueda
+ *
+ */
 @Data
 @EqualsAndHashCode(callSuper=false, of={"oilID"})
 @ToString(callSuper=false, of={"oilID", "type"})

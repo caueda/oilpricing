@@ -6,11 +6,13 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.luxosft.oilpricing.model.Transaction;
 
 @Component
+@Profile({"test", "default"})
 public class TransactionRepositoryImpl implements TransactionRepository {
 	
 	private static final AtomicLong SEQUENCE = new AtomicLong();

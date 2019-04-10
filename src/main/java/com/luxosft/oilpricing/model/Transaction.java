@@ -2,12 +2,16 @@ package com.luxosft.oilpricing.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Entity for a transaction
+ * @author Carlos Roberto Ueda
+ *
+ */
 @Data
 @EqualsAndHashCode(callSuper=false, of={"id"})
 @ToString(callSuper=false, of={"id","oil","quantity","price", "transactionType", "transactionDate"})
