@@ -25,11 +25,11 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public Double getWeightedOilPriceLastNMinutes(Integer minutesPassed){
 		
-		List<Transaction> toProcess = listAllInLastNMinutes(30);		
-		Double zQuantity = toProcess.stream().mapToDouble(Transaction::getQuantity).sum();
-		Double zPriceQuantity = toProcess.stream().mapToDouble(Transaction::getQuantityPrice).sum();
+		List<Transaction> toProcess = listAllInLastNMinutes(minutesPassed);		
+		Double sumQuantity = toProcess.stream().mapToDouble(Transaction::getQuantity).sum();
+		Double sumPriceQuantity = toProcess.stream().mapToDouble(Transaction::getQuantityPrice).sum();
 		
-		return Util.round(zPriceQuantity / zQuantity);
+		return Util.round(sumPriceQuantity / sumQuantity);
 		
 	}
 
@@ -53,11 +53,7 @@ public class TransactionServiceImpl implements TransactionService {
 		LocalDateTime lowerBound = LocalDateTime.now().minusMinutes(minutesPassed);
 		List<Transaction> transactions =
 		transactionRepository.listAll().stream().filter(trans -> {
-			if(trans.getTransactionDate().isAfter(lowerBound)) {
-				return true;	
-			} else {
-				return false;
-			}
+			return trans.getTransactionDate().isAfter(lowerBound);
 		}).collect(Collectors.toList());
 		
 		return transactions;

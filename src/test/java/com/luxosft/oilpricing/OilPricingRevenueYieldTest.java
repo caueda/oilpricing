@@ -4,10 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.luxosft.oilpricing.model.Oil;
+import com.luxosft.oilpricing.model.Type;
+import com.luxosft.oilpricing.repository.OilRepository;
 import com.luxosft.oilpricing.service.OilService;
 
 @RunWith(SpringRunner.class)
@@ -17,27 +22,19 @@ public class OilPricingRevenueYieldTest {
 	@Autowired
 	private OilService oilService;
 	
+	@Mock
+	private OilRepository oilRepository;
+	
 	@Test
 	public void calcProcessRevenueYieldTest() {
 		/* 
 		 * Test case in Spreadsheet - Table-1 (column Revenue Yield)
 		 */
 		Double price = 12.50;
-		
-		assertEquals(oilService.processRevenueYield(oilService.findOne("AAC"), price), Double.valueOf(0.08));
-		assertEquals(oilService.processRevenueYield(oilService.findOne("REW"), price), Double.valueOf(0.56));
-		assertEquals(oilService.processRevenueYield(oilService.findOne("BWO"), price), Double.valueOf(1.36));
-		assertEquals(oilService.processRevenueYield(oilService.findOne("TIM"), price), Double.valueOf(0.62));
-		assertEquals(oilService.processRevenueYield(oilService.findOne("QFC"), price), Double.valueOf(1.76));
-		
-		price = 56.34;
-		
-		assertEquals(oilService.processRevenueYield(oilService.findOne("AAC"), price), Double.valueOf(0.02));
-		assertEquals(oilService.processRevenueYield(oilService.findOne("REW"), price), Double.valueOf(0.12));
-		assertEquals(oilService.processRevenueYield(oilService.findOne("BWO"), price), Double.valueOf(0.30));
-		assertEquals(oilService.processRevenueYield(oilService.findOne("TIM"), price), Double.valueOf(0.14));
-		assertEquals(oilService.processRevenueYield(oilService.findOne("QFC"), price), Double.valueOf(0.39));
-		
+		Mockito.when(oilRepository.findOne(Mockito.anyString())).thenReturn(
+				new Oil("AAC", Type.STANDARD, 1.0, null, 42.0)
+		);
+		assertEquals(oilService.processRevenueYield(oilService.findOne("AAC"), price), Double.valueOf(0.08));		
 	}
 	
 	@Test
@@ -47,31 +44,11 @@ public class OilPricingRevenueYieldTest {
 		 */
 		
 		Double price = 12.50;
-		
+		Mockito.when(oilRepository.findOne(Mockito.anyString())).thenReturn(
+				new Oil("AAC", Type.STANDARD, 1.0, null, 42.0)
+		);
 		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("AAC"), price), Double.valueOf(156.25));
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("REW"), price), Double.valueOf(22.32));
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("BWO"), price), Double.valueOf(9.19));
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("TIM"), price), Double.valueOf(20.16));
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("QFC"), price), Double.valueOf(7.10));
 		
-		price = 56.34;
-		
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("AAC"), price), Double.valueOf(2817));
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("REW"), price), Double.valueOf(469.5));
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("BWO"), price), Double.valueOf(187.8));
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("TIM"), price), Double.valueOf(402.43));
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("QFC"), price), Double.valueOf(144.46));
-		
-	}
-	
-	@Test
-	public void listAllTest(){
-		//There is 5 Oil registers initialized in memory
-		assertEquals(oilService.listAll().size(), 5);
-	}
-
-	@Test
-	public void findOne(){
-		assertEquals(oilService.findOne("AAC").getBarrelValue(), Double.valueOf(42));
 	}
 }
+
