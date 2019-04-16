@@ -17,7 +17,10 @@ import com.luxosft.oilpricing.service.OilService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OilPricingRevenueYieldTest {
+public class TransactionServiceTest {
+	
+	private final Double resultExpectedProcessRevenueYield = Double.valueOf(0.08);
+	private final Double resultExptectedPriceEarningsRation = Double.valueOf(156.25);
 	
 	@Autowired
 	private OilService oilService;
@@ -26,7 +29,7 @@ public class OilPricingRevenueYieldTest {
 	private OilRepository oilRepository;
 	
 	@Test
-	public void calcProcessRevenueYieldTest() {
+	public void should_beEqualToResultExpectedProcessRevenueYield() {
 		/* 
 		 * Test case in Spreadsheet - Table-1 (column Revenue Yield)
 		 */
@@ -34,11 +37,11 @@ public class OilPricingRevenueYieldTest {
 		Mockito.when(oilRepository.findOne(Mockito.anyString())).thenReturn(
 				new Oil("AAC", Type.STANDARD, 1.0, null, 42.0)
 		);
-		assertEquals(oilService.processRevenueYield(oilService.findOne("AAC"), price), Double.valueOf(0.08));		
+		assertEquals(oilService.processRevenueYield(oilService.findOne("AAC"), price), resultExpectedProcessRevenueYield);		
 	}
 	
 	@Test
-	public void calcPriceEarningsRationTest() {
+	public void should_BeEqualToResultExptectedPriceEarningsRation() {
 		/* 
 		 * Test case in Spreadsheet - Table-1 (column Revenue Price-Earnings Ratio)
 		 */
@@ -47,7 +50,7 @@ public class OilPricingRevenueYieldTest {
 		Mockito.when(oilRepository.findOne(Mockito.anyString())).thenReturn(
 				new Oil("AAC", Type.STANDARD, 1.0, null, 42.0)
 		);
-		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("AAC"), price), Double.valueOf(156.25));
+		assertEquals(oilService.processPriceEarningsRation(oilService.findOne("AAC"), price), resultExptectedPriceEarningsRation);
 		
 	}
 }
