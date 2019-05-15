@@ -9,7 +9,7 @@
 		<version>2.1.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.luxosft</groupId>
+	<groupId>com.oilpricing</groupId>
 	<artifactId>oilpricing</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>oilpricing</name>
