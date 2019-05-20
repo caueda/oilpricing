@@ -2,6 +2,7 @@ package com.project.oilpricing.model;
 
 import java.io.Serializable;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper=false, of={"oilID"})
 @ToString(callSuper=false, of={"oilID", "type"})
+@Builder
 public class Oil implements Serializable {
 	
 	/**

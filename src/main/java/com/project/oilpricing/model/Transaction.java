@@ -3,6 +3,7 @@ package com.project.oilpricing.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import lombok.ToString;
  */
 @Data
 @EqualsAndHashCode(callSuper=false, of={"id"})
+@Builder
 @ToString(callSuper=false, of={"id","oil","quantity","price", "transactionType", "transactionDate"})
 public class Transaction implements Serializable, Comparable<Transaction> {
 	/**

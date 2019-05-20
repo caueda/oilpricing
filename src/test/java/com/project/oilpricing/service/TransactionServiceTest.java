@@ -1,7 +1,11 @@
 package com.project.oilpricing.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -72,14 +76,15 @@ public class TransactionServiceTest {
 	}
 	
 	@Test
-	public void should_beEqualToFour() {
-		assertEquals(4L, transactionService.listAll().size());
-	}
-	
-	@Test
 	public void testIfMethodFindOneIsCalledOnce() {
 		transactionService.findOne(1L);
 		Mockito.verify(transactionRepository, times(1)).findOne(Mockito.anyLong());
+	}
+	
+	@Test
+	public void testListAll() {
+		assertThat(transactionService.listAll().isEmpty(), is(false));
+		verify(transactionRepository).listAll();
 	}
 }
 
