@@ -10,29 +10,23 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.MockitoAnnotations;
 
 import com.project.oilpricing.model.Oil;
 import com.project.oilpricing.model.Type;
 import com.project.oilpricing.repository.OilRepository;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class OilServiceTest {
 	
 	private final Double expectedResultRevenueYieldStandard = Double.valueOf(0.08);
 	private final Double resultExpectedRevenueYieldPremium = Double.valueOf(0.62);
 	private final Double resultExptectedPriceEarningsRation = Double.valueOf(156.25);
 	
-	@Autowired
 	private OilService oilService;
 	
-	@MockBean
+	@Mock
 	private OilRepository oilRepository;
 	
 	@Rule
@@ -40,6 +34,10 @@ public class OilServiceTest {
 	
 	@Before
 	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+		
+		oilService = new OilServiceImpl(oilRepository);
+		
 		Mockito.when(oilRepository.listAll()).thenReturn(Stream.of(
 				new Oil("AAC", Type.STANDARD, 1.0, null, 42.0),
 				new Oil("REW", Type.STANDARD, 7.0, null, 47.0),

@@ -1,6 +1,5 @@
 package com.project.oilpricing.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -13,12 +12,9 @@ import java.util.stream.Stream;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.MockitoAnnotations;
 
 import com.project.oilpricing.model.Oil;
 import com.project.oilpricing.model.Transaction;
@@ -26,22 +22,24 @@ import com.project.oilpricing.model.TransactionType;
 import com.project.oilpricing.model.Type;
 import com.project.oilpricing.repository.TransactionRepository;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class TransactionServiceTest {
 	
 	private final Double resultExpectedForWeightedOil = new Double(36.09);
 	private final Double resultExpectedGeometricMean = new  Double(20.53);
 	private final Integer resultExpectedForTransactionsForLast30Minutes = new Integer(3);
 
-	@Autowired
 	private TransactionService transactionService;
 		
-	@MockBean
+	@Mock
 	private TransactionRepository transactionRepository;
 		
 	@Before
 	public void setUp() {
+		
+		MockitoAnnotations.initMocks(this);
+		
+		transactionService = new TransactionServiceImpl(transactionRepository);
+		
 		Mockito.when(transactionRepository.listAll()).thenReturn(Stream.of(
 				//This register is more than 30 minutes passed and shouldn't appear in the filtered list
 				new Transaction(1L, new Oil("AAC", Type.STANDARD, 1.0, null, 42.0),10L, 12.5, TransactionType.BUY, LocalDateTime.now().minusMinutes(30)),
