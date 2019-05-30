@@ -1,4 +1,4 @@
-# Oil Pricing
+# Oil Pricing - Project testing
 
 [![CircleCI](https://circleci.com/gh/caueda/oilpricing.svg?style=svg)](https://circleci.com/gh/caueda/oilpricing)
 
