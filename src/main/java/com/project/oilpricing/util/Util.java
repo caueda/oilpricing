@@ -22,4 +22,22 @@ public final class Util {
 		
 		return sdf.parse(str);
 	}
+	
+	static String timeConversion(String s) {
+		String[] hourParts = s.split(":");
+		Integer hour = Integer.valueOf(hourParts[0]) + 12;
+		if(hourParts[2].contains("PM")) {
+			if(hour < 10) 
+				hourParts[0] = "0" + hour;			
+			else
+				hourParts[0] = hour.toString();
+		} else {
+			if(hour == 24) hourParts[0] = "00";
+		}
+		return hourParts[0] + ":" + hourParts[1] + ":" + hourParts[2].substring(0,2);
+    }
+			
+	public static void main(String[] args) {
+		System.out.println(timeConversion("07:05:45PM"));
+	}
 }
